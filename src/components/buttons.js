@@ -8,8 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
  * 
  * @param {{
  *          onClick: function, 
- *          styleClass: string, 
- *          text: string
+ *          className: string
  *        }} props
  */
 export function AddButton(props) {
@@ -18,9 +17,9 @@ export function AddButton(props) {
             variant="contained"
             startIcon={ <AddIcon /> }
             onClick = { props.onClick }
-            className={ props.styleClass }
+            className={ props.className }
         >
-            { props.text }
+            Add
         </Button>
     );
 }
@@ -29,8 +28,7 @@ export function AddButton(props) {
  * 
  * @param {{
  *          onClick: function, 
- *          styleClass: string, 
- *          text: string
+ *          className: string
  *        }} props
  */
 export function EditButton(props) {
@@ -39,9 +37,9 @@ export function EditButton(props) {
             variant="outlined"
             startIcon={ <EditIcon /> }
             onClick = { props.onClick }
-            className={ props.styleClass }
+            className={ props.className }
         >
-            { props.text }
+            Edit
         </Button>
     );
 }
@@ -50,8 +48,7 @@ export function EditButton(props) {
  * 
  * @param {{
  *          onClick: function, 
- *          styleClass: string, 
- *          text: string
+ *          className: string
  *        }} props
  */
 export function DeleteButton(props) {
@@ -60,9 +57,28 @@ export function DeleteButton(props) {
             variant="contained"
             startIcon={ <DeleteIcon /> }
             onClick = { props.onClick }
-            className={ props.styleClass }
+            className={ props.className }
         >
-            { props.text }
+            Delete
         </Button>
     );
 }
+
+/**
+ * 
+ * @param {{
+ *          onClick: function, 
+ *          className: string
+ *        }} props
+ */
+   export function LoginButton(props) {
+       return (
+           <Button
+               variant="contained"
+               onClick = { props.onClick }
+               className={ props.className }
+           >
+               Login
+           </Button>
+       );
+   }
