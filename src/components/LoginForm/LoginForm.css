@@ -1,0 +1,59 @@
+#loginHeader {
+    background-color: #449be3;
+    padding: 25px;
+    border-radius: 2% 2% 0% 0%;
+    text-align: center;
+    color: #EEEEEE;
+  }
+  
+  #inputContainer {
+    background-color: #EEEEEE;
+    padding: 10px;
+  }
+  
+  /*
+  For the username and password fields to fit containing div
+  */
+  div.MuiFormControl-root.MuiTextField-root.MuiFormControl-marginNormal.fullWidth {
+    width: 100%;
+  }
+  
+  /*
+  Login button
+  */
+  button.login {
+    background-color: #449be3;
+    color: #EEEEEE;
+  }
+  
+  button.login:hover {
+    background-color: #66bdf5
+  }
+  
+  #loginButtonContainer {
+    text-align: center;
+    padding: 5px;
+  }
+  
+  #loginContainer {
+    align-content: center;
+  }
+  
+  #loginInterface {
+    display: inline-block;
+    background-color: #eee;
+    border-radius: 2%;
+  }
+  
+  #errorContainer {
+    text-align: center;
+    color: red;
+  }
+  
+  .noPadding {
+    padding: 0px;
+  }
+  
+  .noMargin {
+    margin: 0px;
+  }
