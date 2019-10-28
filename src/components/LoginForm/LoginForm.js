@@ -61,10 +61,9 @@ export default class LoginForm extends React.Component {
      * Verifies values in username and password fields. If there is a problem, update the state with the error.
      */
     onClick() {
-/******************************************************************************/
         if(this.state.person['username'] === "" || this.state.person['password'] === "") {
             
-            // Have the error message in state, but have no username or password
+            // Have the error message in state
             const errorState = {
                 error: "Invalid username or password", 
                 person: {
@@ -77,10 +76,24 @@ export default class LoginForm extends React.Component {
             this.setState(errorState);
         }
         else {
-            console.log("when clicking, the form data is:");
-            console.log(this.state.person);
-        }
-/******************************************************************************/        
+            // Attempt to login by calling the login method provided by props.onSubmit
+            // Calls the method "login" in App.js
+            let attemptLogin = this.props.onSubmit(this.state.person['username'], this.state.person['password']);
+
+            if( attemptLogin === false ){
+                // Have the error message in state
+                const errorState = {
+                    error: "Invalid username or password", 
+                    person: {
+                        username: this.state.person['username'],
+                        password: this.state.person['password']
+                    }
+                };
+                
+                // Set state to new errored state
+                this.setState(errorState);
+            }
+        } 
     }
 
 }
