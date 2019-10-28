@@ -3,7 +3,6 @@ import { Nav, Navbar }from 'react-bootstrap';
 import './Navbar.css';
 
 const navbar = props => (
-
   <Navbar justify className="justify-content-center" bg="dark" variant="dark" fixed="bottom" >
     <Nav variant="pills" defaultActiveKey="/Rooms">
       <Nav.Item>
@@ -20,7 +19,6 @@ const navbar = props => (
       </Nav.Item>
     </Nav>
   </Navbar>
-
 );
 
 export default navbar;
