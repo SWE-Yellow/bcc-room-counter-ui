@@ -10,7 +10,7 @@ const navbar = props => (
           <Nav.Link eventKey="Rooms" exact to="../Rooms">Rooms</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="Speakers" to="../Speakers" >Speakers</Nav.Link>
+          <Nav.Link eventKey="Speakers" to="../Speakers">Speakers</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="Times" to="../Times">Time Slots</Nav.Link>
