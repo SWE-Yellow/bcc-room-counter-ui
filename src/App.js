@@ -10,7 +10,6 @@ import Times from './components/Times';
 import Presentations from './components/Presentations';
 
 import MaterialTable from 'material-table';
-import LoginForm from './components/LoginForm/LoginForm';
 
 const initialState = {
   loggedIn: JSON.parse(localStorage.getItem('loggedIn')) || false,  // Use cookies to store the "loggedIn" state; https://stackoverflow.com/questions/49819183/react-what-is-the-best-way-to-handle-login-and-authentication
@@ -55,7 +54,8 @@ export default class App extends React.Component{
             <div className="navbar">
               <Navbar />
             </div>
-            <Route path='/' exact strict component={LoginForm}></Route>
+            {/* <Route path='/' exact strict render={(props) => <LoginForm {...props} onSubmit={ this.login } />}></Route> */}
+            <Route exact path='/' component={Rooms}></Route>
             <Route path='/Rooms' component={Rooms}></Route>
             <Route path='/Speakers' component={Speakers}></Route>
             <Route path='/Times' component={Times}></Route>
