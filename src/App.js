@@ -5,7 +5,7 @@ import MaterialTable from 'material-table';
 import LoginForm from './components/LoginForm/LoginForm';
 
 const initialState = {
-  loggedIn: false,
+  loggedIn: JSON.parse(localStorage.getItem('loggedIn')) || false,  // Use cookies to store the "loggedIn" state; https://stackoverflow.com/questions/49819183/react-what-is-the-best-way-to-handle-login-and-authentication
   columns: [
     { title: 'Room', field: 'room' },
     { title: 'Room count', field: 'count' },
@@ -101,6 +101,8 @@ export default class App extends React.Component{
         loggedIn: true,
         columns: this.state.columns,
         data: this.state.data,
+      }, () => {
+        localStorage.setItem('loggedIn', JSON.stringify(this.state.loggedIn)) // Use cookies to store the "loggedIn" state
       });
 
       return true;
