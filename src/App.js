@@ -1,33 +1,17 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import MaterialTable from 'material-table';
-import LoginForm from './components/LoginForm/LoginForm';
+import Rooms from './components/Rooms';
+// import Times from './components/Times';
+// import Speakers from './components/Speakers';
+// import Presentations from './components/Presentations';
 
-const initialState = {
-  loggedIn: JSON.parse(localStorage.getItem('loggedIn')) || false,  // Use cookies to store the "loggedIn" state; https://stackoverflow.com/questions/49819183/react-what-is-the-best-way-to-handle-login-and-authentication
-  columns: [
-    { title: 'Room', field: 'room' },
-    { title: 'Room count', field: 'count' },
-  ],
-  data: [
-    { room: 'Accelerate', count: 100 },
-    {
-      room: 'Dobbs 310',
-      count: 30
-    },
-  ],
-}
-
-
-export default class App extends React.Component{
-
-  constructor(props) {
-    super(props);
-    this.state = initialState;
-
-    this.login = this.login.bind(this);
-  }
+export default class App extends React.Component {
+  state = {
+    total: null,
+    next: null,
+    operation: null,
+  };
 
   render () {
 
