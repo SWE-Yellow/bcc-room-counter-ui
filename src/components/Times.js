@@ -1,6 +1,5 @@
 import React from 'react';
-import './App.css';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './Navbar/Navbar';
 import MaterialTable from 'material-table';
 
 export default function MaterialTableDemo() {
@@ -19,7 +18,7 @@ export default function MaterialTableDemo() {
   });
 
   return (
-    <div className="Speakers">
+    <div className="Times">
       <div className="navbar">
         <Navbar />
       </div>

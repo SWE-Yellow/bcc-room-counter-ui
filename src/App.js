@@ -1,6 +1,14 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import LoginForm from './components/LoginForm/LoginForm';
+import Rooms from './components/Rooms';
+import Speakers from './components/Speakers';
+import Times from './components/Times';
+import Presentations from './components/Presentations';
+
 import MaterialTable from 'material-table';
 import LoginForm from './components/LoginForm/LoginForm';
 
@@ -40,49 +48,20 @@ export default class App extends React.Component{
     else {
 
       return (
-        <div className="App">
-          <div className="navbar">
-            <Navbar />
+        <Router>
+          <div className="App">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+            <div className="navbar">
+              <Navbar />
+            </div>
+            <Route path='/' exact strict component={LoginForm}></Route>
+            <Route path='/Rooms' component={Rooms}></Route>
+            <Route path='/Speakers' component={Speakers}></Route>
+            <Route path='/Times' component={Times}></Route>
+            <Route path='/Presentations' component={Presentations}></Route>
           </div>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-          <div className="table">
-            <MaterialTable
-              title="Boston Code Camp Rooms"
-              columns={this.state.columns}
-              data={this.state.data}
-              editable={{
-                onRowAdd: newData =>
-                  new Promise(resolve => {
-                    setTimeout(() => {
-                      resolve();
-                      const data = [...this.state.data];
-                      data.push(newData);
-                      this.setState({ ...this.state, data });
-                    }, 600);
-                  }),
-                onRowUpdate: (newData, oldData) =>
-                  new Promise(resolve => {
-                    setTimeout(() => {
-                      resolve();
-                      const data = [...this.state.data];
-                      data[data.indexOf(oldData)] = newData;
-                      this.setState({ ...this.state, data });
-                    }, 600);
-                  }),
-                onRowDelete: oldData =>
-                  new Promise(resolve => {
-                    setTimeout(() => {
-                      resolve();
-                      const data = [...this.state.data];
-                      data.splice(data.indexOf(oldData), 1);
-                      this.setState({ ...this.state, data });
-                    }, 600);
-                  }),
-              }}
-            />
-          </div>
-        </div>
+        </Router>
       );
     }
   }

@@ -1,27 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
 import { Nav, Navbar }from 'react-bootstrap';
-import { Link, BrowserRouter as Router } from "react-router-dom";
+import './Navbar.css';
 
 const navbar = props => (
-  <Router>
-    <Navbar justify variant="tabs" className="justify-content-center" bg="dark" variant="dark" fixed="bottom" >
-      <Nav variant="pills" defaultActiveKey="Rooms">
+  <Navbar justify className="justify-content-center" bg="dark" variant="dark" fixed="bottom" >
+    <Nav variant="pills" defaultActiveKey="/Rooms">
       <Nav.Item>
-        <Nav.Link href="/rooms">Rooms</Nav.Link>
+        <Nav.Link eventKey="/Rooms" exact href='/Rooms'>Rooms</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/speakers">Speakers</Nav.Link>
+        <Nav.Link eventKey="/Speakers" exact href='/Speakers'>Speakers</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/times">Time Slots</Nav.Link>
+        <Nav.Link eventKey="/Times" exact href='/Times'>Time Slots</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/presentations">Presentations</Nav.Link>
+        <Nav.Link eventKey="/Presentations" exact href='/Presentations'>Presentations</Nav.Link>
       </Nav.Item>
-      </Nav>
-    </Navbar>
-  </Router>
-
+    </Nav>
+  </Navbar>
 );
 
 export default navbar;
