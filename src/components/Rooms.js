@@ -1,5 +1,4 @@
 import React from 'react';
-import Navbar from './Navbar/Navbar';
 import MaterialTable from 'material-table';
 
 export default function MaterialTableDemo() {
@@ -19,14 +18,16 @@ export default function MaterialTableDemo() {
 
   return (
     <div className="Rooms">
-      <div className="navbar">
-        <Navbar />
-      </div>
       <div className="table">
         <MaterialTable
           title="Boston Code Camp Rooms"
           columns={state.columns}
           data={state.data}
+          localization={{
+            header: {
+                actions: 'Edit/Delete'
+            },
+        }}
           editable={{
             onRowAdd: newData =>
               new Promise(resolve => {

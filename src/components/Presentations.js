@@ -1,32 +1,28 @@
 import React from 'react';
-import Navbar from './Navbar/Navbar';
 import MaterialTable from 'material-table';
 
 export default function MaterialTableDemo() {
   const [state, setState] = React.useState({
     columns: [
-      { title: 'Room', field: 'room' },
-      { title: 'Room count', field: 'count' },
+      { title: 'Presentation Topic', field: 'topic' },
     ],
     data: [
-      { room: 'Accelerate', count: 100 },
-      {
-        room: 'Dobbs 310',
-        count: 30
-      },
+      { topic: 'Software Engineering'},
     ],
   });
 
   return (
     <div className="Speakers">
-      <div className="navbar">
-        <Navbar />
-      </div>
       <div className="table">
         <MaterialTable
           title="Boston Code Camp Presentations"
           columns={state.columns}
           data={state.data}
+          localization={{
+            header: {
+                actions: 'Edit/Delete'
+            },
+        }}
           editable={{
             onRowAdd: newData =>
               new Promise(resolve => {

@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 import './Navbar.css';
 
 const navbar = props => (
-  <Navbar justify className="justify-content-center" bg="dark" variant="dark" fixed="bottom" >
+  <Navbar justify className="justify-content-center" bg="dark" variant="dark">
     <Nav variant="pills" defaultActiveKey="/Rooms" activeKey={props.location.pathname}>
       <Nav.Item>
         <Nav.Link eventKey="/Rooms" exact href='/Rooms'>Rooms</Nav.Link>

@@ -1,7 +1,5 @@
 import React from 'react';
-import './App.css';
 import Navbar from './components/Navbar/Navbar';
-
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import LoginForm from './components/LoginForm/LoginForm';
 import Rooms from './components/Rooms';
@@ -9,7 +7,7 @@ import Speakers from './components/Speakers';
 import Times from './components/Times';
 import Presentations from './components/Presentations';
 
-
+/* changed \\ false to \\ true */
 const initialState = {
   loggedIn: JSON.parse(localStorage.getItem('loggedIn')) || false,  // Use cookies to store the "loggedIn" state; https://stackoverflow.com/questions/49819183/react-what-is-the-best-way-to-handle-login-and-authentication
   columns: [
