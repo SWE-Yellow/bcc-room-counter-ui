@@ -1,10 +1,11 @@
 import React from "react";
 import { Nav, Navbar }from 'react-bootstrap';
+import { withRouter } from "react-router";
 import './Navbar.css';
 
 const navbar = props => (
   <Navbar justify className="justify-content-center" bg="dark" variant="dark" fixed="bottom" >
-    <Nav variant="pills" defaultActiveKey="/Rooms">
+    <Nav variant="pills" defaultActiveKey="/Rooms" activeKey={props.location.pathname}>
       <Nav.Item>
         <Nav.Link eventKey="/Rooms" exact href='/Rooms'>Rooms</Nav.Link>
       </Nav.Item>
@@ -21,4 +22,4 @@ const navbar = props => (
   </Navbar>
 );
 
-export default navbar;
+export default withRouter(navbar);
