@@ -36,31 +36,6 @@ export default class App extends React.Component{
   }
 
   render () {
-
-    // if(this.state['loggedIn'] === false) {
-
-    //   return (
-    //     <LoginForm onSubmit={ this.login } />
-    //   );
-    // }
-    // else {
-
-    //   return (
-    //     <React.Fragment>
-    //       <Router>
-    //           <div className="navbar">
-    //             <Navbar />
-    //           </div>
-    //           <Route path='/' exact strict component={LoginForm}></Route>
-    //           <Route path='/Rooms' component={Rooms}></Route>
-    //           <Route path='/Speakers' component={Speakers}></Route>
-    //           <Route path='/Times' component={Times}></Route>
-    //           <Route path='/Presentations' component={Presentations}></Route>
-    //       </Router>
-    //     </React.Fragment>
-    //   );
-    // }
-
     return(
       <Router>
         <Navbar />
