@@ -1,5 +1,7 @@
 import React from 'react';
+import './App.css';
 import Navbar from './components/Navbar/Navbar';
+import fire from './components/fire';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import LoginForm from './components/LoginForm/LoginForm';
 import Rooms from './components/Rooms';
@@ -7,7 +9,7 @@ import Speakers from './components/Speakers';
 import Times from './components/Times';
 import Presentations from './components/Presentations';
 
-/* changed \\ false to \\ true */
+
 const initialState = {
   loggedIn: JSON.parse(localStorage.getItem('loggedIn')) || false,  // Use cookies to store the "loggedIn" state; https://stackoverflow.com/questions/49819183/react-what-is-the-best-way-to-handle-login-and-authentication
   columns: [
@@ -23,7 +25,11 @@ const initialState = {
   ],
 }
 
-
+/*
+ * Firebase account and default login:
+ * Email: bcc_counter@gmail.com
+ *  Pass: team_yellow123
+ */
 export default class App extends React.Component{
 
   constructor(props) {
@@ -34,28 +40,38 @@ export default class App extends React.Component{
   }
 
   render () {
-    return(
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route path='/login'>
-            <LoginForm onSubmit={this.login}/>
-          </Route>
-          <PrivateRoute path='/Rooms' isLoggedIn={this.state.loggedIn}>
-            <Rooms />
-          </PrivateRoute>
-          <PrivateRoute path='/Speakers' isLoggedIn={this.state.loggedIn}>
-            <Speakers />
-          </PrivateRoute>
-          <PrivateRoute path='/Times' isLoggedIn={this.state.loggedIn}>
-             <Times />
-          </PrivateRoute>
-          <PrivateRoute path='/Presentations' isLoggedIn={this.state.loggedIn}>
-            <Presentations />
-          </PrivateRoute>
-        </Switch>
-      </Router>
-    )
+  
+
+    if(this.state['loggedIn'] === false) {
+
+      return (
+        <LoginForm onSubmit={ this.login } />
+      );
+    }
+    else {
+      return(
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route path='/login'>
+              <LoginForm onSubmit={this.login}/>
+            </Route>
+            <PrivateRoute path='/Rooms' isLoggedIn={this.state.loggedIn}>
+              <Rooms />
+            </PrivateRoute>
+            <PrivateRoute path='/Speakers' isLoggedIn={this.state.loggedIn}>
+              <Speakers />
+            </PrivateRoute>
+            <PrivateRoute path='/Times' isLoggedIn={this.state.loggedIn}>
+              <Times />
+            </PrivateRoute>
+            <PrivateRoute path='/Presentations' isLoggedIn={this.state.loggedIn}>
+              <Presentations />
+            </PrivateRoute>
+          </Switch>
+        </Router>
+      )
+    }
   }
 
   
@@ -67,23 +83,23 @@ export default class App extends React.Component{
    * @param string password 
    */
   login(username, password){
-    console.log(username, " ", password);   /******          Remove this before moving on           ******/
 
-    if( username === "admin" & password === "admin") {
+    fire.auth().signInWithEmailAndPassword(username, password).then((u)=>{
+    }).catch((error) => {
+        console.log(error);
+    });
 
-      // Update the state so loggedIn is now true; indicates login successful
-      this.setState({
-        loggedIn: true,
-      }, () => {
-        localStorage.setItem('loggedIn', JSON.stringify(this.state.loggedIn)) // Use cookies to store the "loggedIn" state
-      });
+    fire.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          loggedIn: true,
+        }, () => {
+          localStorage.setItem('loggedIn', JSON.stringify(this.state.loggedIn)) // Use cookies to store the "loggedIn" state
+        });
+      }
+    });
 
-      return true;
-    }
-    else{
-      // Login failed
-      return false;
-    }
+    return false;
   }
 }
 

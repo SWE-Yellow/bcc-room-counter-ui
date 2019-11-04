@@ -123,7 +123,7 @@ function UsernameField(props) {
         <TextField
             name="username"
             id="outlined-username-input"
-            label="Username"
+            label="Email"
             margin="normal"
             variant="outlined"
             className="fullWidth"
