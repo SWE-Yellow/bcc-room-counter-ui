@@ -26,7 +26,7 @@ export default class LoginForm extends React.Component {
         // Update the state everytime a value in the usename or password field changes
         // Also display errors from the state if they exist
         return (
-            <div id="loginContainer">
+            <div class="loginContainer">
                 <div id="loginInterface">
                     <LoginHeader />
                     <div id="inputContainer">

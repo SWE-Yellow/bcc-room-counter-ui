@@ -17,6 +17,13 @@
   div.MuiFormControl-root.MuiTextField-root.MuiFormControl-marginNormal.fullWidth {
     width: 100%;
   }
+
+  .loginContainer {
+    height: 50vh; /* Magic here */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   /*
   Login button
