@@ -58,6 +58,9 @@ export default class App extends React.Component{
             <PrivateRoute path='/Rooms' isLoggedIn={this.state.loggedIn}>
               <Rooms />
             </PrivateRoute>
+            <PrivateRoute path='/Rooms' isLoggedIn={this.state.loggedIn}>
+              <Rooms />
+            </PrivateRoute>
             <PrivateRoute path='/Speakers' isLoggedIn={this.state.loggedIn}>
               <Speakers />
             </PrivateRoute>
@@ -98,7 +101,7 @@ export default class App extends React.Component{
       }
     });
 
-    return false;
+    return this.state['loggedIn'];
   }
 }
 
