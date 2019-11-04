@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import fire from './components/fire';
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
