@@ -23,6 +23,8 @@ export default function MaterialTableDemo() {
           title="Boston Code Camp Rooms"
           columns={state.columns}
           data={state.data}
+          // style={{alignItems: 'center', justifyContent: 'center', width: 1200, paddingLeft:'20%',  borderBottom:'none'}}
+          style={{marginLeft: '4%', marginRight: '4%'}}
           localization={{
             header: {
                 actions: 'Edit/Delete'

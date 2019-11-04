@@ -23,6 +23,7 @@ export default function MaterialTableDemo() {
           title="Boston Code Camp Speakers"
           columns={state.columns}
           data={state.data}
+          style={{marginLeft: '4%', marginRight: '4%'}}
           localization={{
             header: {
                 actions: 'Edit/Delete'

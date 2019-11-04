@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -19,4 +19,10 @@
 
 .App-link {
   color: #09d3ac;
+} */
+
+.table {
+  margin-bottom: 3em;
+  margin-right: 40%;
+  margin-left: 40%;
 }
