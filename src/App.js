@@ -55,7 +55,7 @@ export default class App extends React.Component{
             <Route path='/login'>
               <LoginForm onSubmit={this.login}/>
             </Route>
-            <PrivateRoute path='/Rooms' isLoggedIn={this.state.loggedIn}>
+            <PrivateRoute path='/' isLoggedIn={this.state.loggedIn}>
               <Rooms />
             </PrivateRoute>
             <PrivateRoute path='/Rooms' isLoggedIn={this.state.loggedIn}>
@@ -97,11 +97,11 @@ export default class App extends React.Component{
           loggedIn: true,
         }, () => {
           localStorage.setItem('loggedIn', JSON.stringify(this.state.loggedIn)) // Use cookies to store the "loggedIn" state
-        });
+        }).bind(this);
       }
     });
 
-    return this.state['loggedIn'];
+    return this.state.loggedIn;
   }
 }
 
