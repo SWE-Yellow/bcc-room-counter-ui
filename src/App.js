@@ -39,25 +39,13 @@ export default class App extends React.Component{
   }
 
   render () {
-  
-
-    if(this.state['loggedIn'] === false) {
-
-      return (
-        <LoginForm onSubmit={ this.login } />
-      );
-    }
-    else {
       return(
         <Router>
           <Navbar />
           <Switch>
-            <Route path='/login'>
+            <Route exact path='/'>
               <LoginForm onSubmit={this.login}/>
             </Route>
-            <PrivateRoute path='/' isLoggedIn={this.state.loggedIn}>
-              <Rooms />
-            </PrivateRoute>
             <PrivateRoute path='/Rooms' isLoggedIn={this.state.loggedIn}>
               <Rooms />
             </PrivateRoute>
@@ -73,7 +61,7 @@ export default class App extends React.Component{
           </Switch>
         </Router>
       )
-    }
+    
   }
 
   
@@ -97,7 +85,7 @@ export default class App extends React.Component{
           loggedIn: true,
         }, () => {
           localStorage.setItem('loggedIn', JSON.stringify(this.state.loggedIn)) // Use cookies to store the "loggedIn" state
-        }).bind(this);
+        });
       }
     });
 
@@ -115,7 +103,7 @@ function PrivateRoute({ children, isLoggedIn,...rest }) {
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: "/",
               state: { from: props.location }
             }}
           />
