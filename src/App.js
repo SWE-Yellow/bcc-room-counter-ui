@@ -6,6 +6,7 @@ import LoginForm from './components/LoginForm/LoginForm';
 import Rooms from './components/Rooms';
 import Speakers from './components/Speakers';
 import Times from './components/Times';
+// import EditableTable from './components/Presentations';
 import Presentations from './components/Presentations';
 
 

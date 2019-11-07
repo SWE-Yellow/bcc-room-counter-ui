@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Table, Input, Button, Popconfirm, Form } from 'antd';
 
@@ -14,7 +14,7 @@ const EditableRow = ({ form, index, ...props }) => (
 
 const EditableFormRow = Form.create()(EditableRow);
 
-export default class EditableCell extends React.Component {
+class EditableCell extends React.Component {
   state = {
     editing: false,
   };
@@ -89,7 +89,7 @@ export default class EditableCell extends React.Component {
   }
 }
 
-class EditableTable extends React.Component {
+export default class Presentations extends React.Component {
   constructor(props) {
     super(props);
     this.columns = [
@@ -207,5 +207,3 @@ class EditableTable extends React.Component {
     );
   }
 }
-
-ReactDOM.render(<EditableTable />, EditableCell);
