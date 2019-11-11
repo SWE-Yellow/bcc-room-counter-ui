@@ -1,7 +1,11 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import moment from 'moment'
+import { Table, Input, Button, Popconfirm, Form, TimePicker } from 'antd';
+
+const format = 'HH:mm';
+
 
 
 const EditableContext = React.createContext();
@@ -94,15 +98,16 @@ export default class Times extends React.Component {
     super(props);
     this.columns = [
       {
-        title: 'Room Name',
-        dataIndex: 'name',
-        width: '30%',
-        editable: true,
+        title: 'Start Time',
+        dataIndex: 'operation',
+        render: () => 
+        <TimePicker onChange={this.onChange} defaultValue={moment('00:00', format)} format={format} />
       },
       {
-        title: 'Room Capacity',
+        title: 'End Time',
         dataIndex: 'cap',
-        editable: true
+        render: () => 
+        <TimePicker onChange={this.onChange} defaultValue={moment('00:00', format)} format={format} />
       },
       {
         title: 'Delete/Edit',
@@ -132,6 +137,11 @@ export default class Times extends React.Component {
       count: 2,
     };
   }
+
+
+  onChange = (time, timeString) => {
+    console.log(time, timeString)
+  };
 
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
@@ -193,7 +203,6 @@ export default class Times extends React.Component {
         <Table
           components={components}
           rowClassName={() => 'editable-row'}
-          bordered
           dataSource={dataSource}
           columns={columns}
         />
