@@ -1,7 +1,7 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import { Table, Input, InputNumber, Button, Popconfirm, Form } from 'antd';
 
 
 const EditableContext = React.createContext();
@@ -105,7 +105,7 @@ export default class Rooms extends React.Component {
         editable: true
       },
       {
-        title: 'Delete/Edit',
+        title: 'Delete',
         dataIndex: 'operation',
         render: (text, record) =>
           this.state.dataSource.length >= 1 ? (
@@ -113,6 +113,35 @@ export default class Rooms extends React.Component {
               <a>Delete</a>
             </Popconfirm>
           ) : null,
+      },
+      {
+        title: 'Edit',
+        dataIndex: 'operation',
+        render: (text, record) => {
+          const { editingKey } = this.state;
+          const editable = this.isEditing(record);
+          return editable ? (
+            <span>
+              <EditableContext.Consumer>
+                {form => (
+                  <a
+                    onClick={() => this.save(form, record.key)}
+                    style={{ marginRight: 8 }}
+                  >
+                    Save
+                  </a>
+                )}
+              </EditableContext.Consumer>
+              <Popconfirm title="Sure to cancel?" onConfirm={() => this.cancel(record.key)}>
+                <a>Cancel</a>
+              </Popconfirm>
+            </span>
+          ) : (
+            <a enabled={editingKey !== ''} onClick={() => this.edit(record.key)}>
+              Edit
+            </a>
+          );
+        },
       },
     ];
 
@@ -133,10 +162,43 @@ export default class Rooms extends React.Component {
     };
   }
 
+  isEditing = record => record.key === this.state.editingKey;
+
+  cancel = () => {
+    this.setState({ editingKey: '' });
+  };
+
+  save(form, key) {
+    form.validateFields((error, row) => {
+      if (error) {
+        return;
+      }
+      const newData = [...this.state.data];
+      const index = newData.findIndex(item => key === item.key);
+      if (index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, {
+          ...item,
+          ...row,
+        });
+        this.setState({ data: newData, editingKey: '' });
+      } else {
+        newData.push(row);
+        this.setState({ data: newData, editingKey: '' });
+      }
+    });
+  }
+
+  edit(key) {
+    this.setState({ editingKey: key });
+  }
+
+
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
+ 
 
   handleAdd = () => {
     const { count, dataSource } = this.state;
@@ -182,13 +244,14 @@ export default class Rooms extends React.Component {
           dataIndex: col.dataIndex,
           title: col.title,
           handleSave: this.handleSave,
+          editing: this.isEditing(record),
         }),
       };
     });
     return (
       <div>
         <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-          Add a row
+          Add Room
         </Button>
         <Table
           components={components}
@@ -196,6 +259,9 @@ export default class Rooms extends React.Component {
           bordered
           dataSource={dataSource}
           columns={columns}
+          pagination={{
+            onChange: this.cancel,
+          }}
         />
       </div>
     );
