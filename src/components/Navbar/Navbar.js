@@ -1,11 +1,15 @@
 import React from "react";
-import { Nav, Navbar }from 'react-bootstrap';
+import { Nav, Navbar, Button }from 'react-bootstrap';
 import { withRouter } from "react-router";
+import fire from '../fire';
 import './Navbar.css';
 
 const navbar = props => (
   <Navbar justify className="justify-content-center" bg="dark" variant="dark">
-    <Nav variant="pills" defaultActiveKey="/Rooms" activeKey={props.location.pathname}>
+    <Nav className="mr-auto">
+      <Navbar.Brand> Boston Code Camp Counter</Navbar.Brand>
+    </Nav>
+    <Nav className="mr-auto" variant="pills" defaultActiveKey="/Rooms" activeKey={props.location.pathname}>
       <Nav.Item>
         <Nav.Link eventKey="/Rooms" exact href='/Rooms'>Rooms</Nav.Link>
       </Nav.Item>
@@ -18,6 +22,9 @@ const navbar = props => (
       <Nav.Item>
         <Nav.Link eventKey="/Presentations" exact href='/Presentations'>Presentations</Nav.Link>
       </Nav.Item>
+    </Nav>
+    <Nav className="mr-right">
+      <Button variant="outline-info" href='/Login' onClick={() => fire.auth().signOut()}>Log Out</Button>
     </Nav>
   </Navbar>
 );

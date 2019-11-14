@@ -6,7 +6,6 @@ import LoginForm from './components/LoginForm/LoginForm';
 import Rooms from './components/Rooms';
 import Speakers from './components/Speakers';
 import Times from './components/Times';
-// import EditableTable from './components/Presentations';
 import Presentations from './components/Presentations';
 
 
@@ -40,29 +39,31 @@ export default class App extends React.Component{
   }
 
   render () {
-      return(
-        <Router>
-          <Navbar />
-          <Switch>
-            <Route exact path='/'>
-              <LoginForm onSubmit={this.login}/>
-            </Route>
-            <PrivateRoute path='/Rooms' isLoggedIn={this.state.loggedIn}>
-              <Rooms />
-            </PrivateRoute>
-            <PrivateRoute path='/Speakers' isLoggedIn={this.state.loggedIn}>
-              <Speakers />
-            </PrivateRoute>
-            <PrivateRoute path='/Times' isLoggedIn={this.state.loggedIn}>
-              <Times />
-            </PrivateRoute>
-            <PrivateRoute path='/Presentations' isLoggedIn={this.state.loggedIn}>
-              <Presentations />
-            </PrivateRoute>
-          </Switch>
-        </Router>
-      )
-    
+    return(
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path='/'>
+            <LoginForm onSubmit={this.login}/>
+          </Route>
+          <PrivateRoute path='/Rooms' isLoggedIn={this.state.loggedIn}>
+            <Rooms />
+          </PrivateRoute>
+          <PrivateRoute path='/Speakers' isLoggedIn={this.state.loggedIn}>
+            <Speakers />
+          </PrivateRoute>
+          <PrivateRoute path='/Times' isLoggedIn={this.state.loggedIn}>
+            <Times />
+          </PrivateRoute>
+          <PrivateRoute path='/Presentations' isLoggedIn={this.state.loggedIn}>
+            <Presentations />
+          </PrivateRoute>
+          <PrivateRoute path='/Login'>
+            <LoginForm />
+          </PrivateRoute>
+        </Switch>
+      </Router>
+    )
   }
 
   
@@ -80,18 +81,32 @@ export default class App extends React.Component{
         console.log(error);
     });
 
-    fire.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({
-          loggedIn: true,
-        }, () => {
-          localStorage.setItem('loggedIn', JSON.stringify(this.state.loggedIn)) // Use cookies to store the "loggedIn" state
-        });
-      }
-    });
+    let user = checkAuthStatus();
+
+    if (user) {
+      this.setState({
+        loggedIn: true,
+      }, () => {
+        localStorage.setItem('loggedIn', JSON.stringify(this.state.loggedIn)) // Use cookies to store the "loggedIn" state
+      });
+    }
 
     return this.state.loggedIn;
   }
+}
+
+function checkAuthStatus() {
+   return new Promise((resolve, reject) => {
+    try {
+      fire.auth()
+       .onAuthStateChanged(user => {
+           console.log('userChecked:', user)
+           resolve(user);
+       });
+    } catch {
+      reject('api failed')
+    }
+  });
 }
 
 function PrivateRoute({ children, isLoggedIn,...rest }) {
