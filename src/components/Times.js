@@ -119,6 +119,35 @@ export default class Times extends React.Component {
             </Popconfirm>
           ) : null,
       },
+      {
+        title: 'Edit',
+        dataIndex: 'operation',
+        render: (text, record) => {
+          const { editingKey } = this.state;
+          const editable = this.isEditing(record);
+          return editable ? (
+            <span>
+              <EditableContext.Consumer>
+                {form => (
+                  <a
+                    onClick={() => this.save(form, record.key)}
+                    style={{ marginRight: 8 }}
+                  >
+                    Save
+                  </a>
+                )}
+              </EditableContext.Consumer>
+              <Popconfirm title="Sure to cancel?" onConfirm={() => this.cancel(record.key)}>
+                <a>Cancel</a>
+              </Popconfirm>
+            </span>
+          ) : (
+            <a enabled={editingKey !== ''} onClick={() => this.edit(record.key)}>
+              Edit
+            </a>
+          );
+        },
+      },
     ];
 
     this.state = {
@@ -136,6 +165,37 @@ export default class Times extends React.Component {
       ],
       count: 2,
     };
+  }
+
+  isEditing = record => record.key === this.state.editingKey;
+
+  cancel = () => {
+    this.setState({ editingKey: '' });
+  };
+
+  save(form, key) {
+    form.validateFields((error, row) => {
+      if (error) {
+        return;
+      }
+      const newData = [...this.state.data];
+      const index = newData.findIndex(item => key === item.key);
+      if (index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, {
+          ...item,
+          ...row,
+        });
+        this.setState({ data: newData, editingKey: '' });
+      } else {
+        newData.push(row);
+        this.setState({ data: newData, editingKey: '' });
+      }
+    });
+  }
+
+  edit(key) {
+    this.setState({ editingKey: key });
   }
 
 

@@ -40,6 +40,7 @@ class EditableCell extends React.Component {
       }
       this.toggleEdit();
       handleSave({ ...record, ...values });
+
     });
   };
 
@@ -239,7 +240,8 @@ export default class Presentations extends React.Component {
       ...item,
       ...row,
     });
-    this.setState({ dataSource: newData });
+    this.setState({ dataSource: newData});
+    // this.setState({ editingKey: '' });
   };
 
   render() {

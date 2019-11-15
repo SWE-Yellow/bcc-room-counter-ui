@@ -221,7 +221,7 @@ export default class Rooms extends React.Component {
       ...item,
       ...row,
     });
-    this.setState({ dataSource: newData });
+    this.setState({ dataSource: newData, editingKey: '' });
   };
 
   render() {
