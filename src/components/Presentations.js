@@ -141,6 +141,7 @@ export default class Presentations extends React.Component {
       {
         title: 'Edit',
         dataIndex: 'operation',
+        width: '10%',
         render: (text, record) => {
           const { editingKey } = this.state;
           const editable = this.isEditing(record);
@@ -184,6 +185,12 @@ export default class Presentations extends React.Component {
     };
   }
 
+  isEditing = record => record.key === this.state.editingKey;
+
+  cancel = () => {
+    this.setState({ editingKey: '' });
+  };
+
   save(form, key) {
     form.validateFields((error, row) => {
       if (error) {
@@ -205,26 +212,23 @@ export default class Presentations extends React.Component {
     });
   }
 
-  isEditing = record => record.key === this.state.editingKey;
-
-  cancel = () => {
-    this.setState({ editingKey: '' });
-  };
-
   edit(key) {
     this.setState({ editingKey: key });
   }
+
 
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
+ 
 
   handleAdd = () => {
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
-      name: `Presentation ${count}`,
+      name: `Edward King ${count}`,
+      cap: 5,
     };
     this.setState({
       dataSource: [...dataSource, newData],
@@ -240,8 +244,7 @@ export default class Presentations extends React.Component {
       ...item,
       ...row,
     });
-    this.setState({ dataSource: newData});
-    // this.setState({ editingKey: '' });
+    this.setState({ dataSource: newData, editingKey: '' });
   };
 
   render() {
@@ -269,8 +272,8 @@ export default class Presentations extends React.Component {
     });
     return (
       <div>
-        <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-          Add a row
+        <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, fontSize: 20, marginRight: "600px", marginLeft: "620px", marginTop: 16 }}>
+          Add New Presentation
         </Button>
         <Table
           components={components}
@@ -278,6 +281,7 @@ export default class Presentations extends React.Component {
           bordered
           dataSource={dataSource}
           columns={columns}
+          style={{ marginRight: "75px", marginLeft: "75px" }}
         />
       </div>
     );

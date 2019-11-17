@@ -32,3 +32,12 @@
   font-size: 12px;
   margin-top: -4px;
 }
+
+.rooms {
+  width: 50px;
+}
+
+.addButton {
+  position: absolute;
+  font-size: 100;
+}

@@ -13,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
  */
 export function AddButton(props) {
     return (
-        <Button
+        <Button 
             variant="contained"
             startIcon={ <AddIcon /> }
             onClick = { props.onClick }
