@@ -174,17 +174,41 @@ export default class Presentations extends React.Component {
 
     this.state = {
       dataSource: [
-        {
-          key: '0',
-          name: 'Presentation 0',
-        },
-        {
-          key: '1',
-          name: 'Presentation 1',
-        },
+          {
+            key: '0',
+            name: 'Presentation 0',
+          },
+          {
+            key: '1',
+            name: 'Presentation 1',
+          },
       ],
       count: 2,
     };
+  }
+
+  componentDidMount() {
+    // fetch(UII.fetchRooms()).then(results => {
+    //   console.log(results)
+    //   return results.json();
+    // }).then(data => {
+    //     let res = data.results.map((pres) => {
+    //       return(
+    //         console.log(true)
+    //       )
+    //     })
+    //     this.setState({ res: res})
+    //     console.log("Hello World")
+    // })
+
+    UII.fetchRooms().get("roomName")
+    let res = UII.fetchRooms(() => {
+      let key = 0
+      let name = ''
+      let rName = res.get("roomName")
+      this.setState({ key: key, name: rName})
+    })
+    console.log(res)
   }
 
   save(form, key) {
@@ -280,6 +304,7 @@ export default class Presentations extends React.Component {
           rowClassName={() => 'editable-row'}
           bordered
           dataSource={dataSource}
+          // dataSource={UII.fetchRooms().get("roomName")}
           columns={columns}
         />
       </div>

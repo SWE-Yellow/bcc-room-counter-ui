@@ -2,7 +2,11 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Table, Input, InputNumber, Button, Popconfirm, Form } from 'antd';
+import UIInterface from './bcc-room-counter/UIInterface.js'
 
+let UII = new UIInterface()
+
+let roomData = []
 
 const EditableContext = React.createContext();
 
@@ -146,20 +150,25 @@ export default class Rooms extends React.Component {
     ];
 
     this.state = {
-      dataSource: [
-        {
-          key: '0',
-          name: 'Dobbs 310',
-          cap: '20',
-        },
-        {
-          key: '1',
-          name: 'Accelerate',
-          cap: '50',
-        },
-      ],
-      count: 2,
+      dataSource: roomData
     };
+  }
+
+  updateData() {
+    
+    let roomInfo = UII.fetchRooms();
+    // let updatedRoomData = []
+    console.log(roomInfo.get("roomCapacity").length)
+    for (let i = 0; i < roomInfo.get("roomName").length; i++) {
+      console.log(roomInfo.get("roomName")[i] + ' ' + roomInfo.get("roomCapacity")[i])
+      roomData.push(
+        {
+          name: roomInfo.get("roomName")[i], 
+          cap: roomInfo.get("roomCapacity")[i],
+          key: i-1 
+        })
+    }
+    // roomData = updatedRoomData
   }
 
   isEditing = record => record.key === this.state.editingKey;
@@ -197,6 +206,7 @@ export default class Rooms extends React.Component {
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+    UII.deleteRoom(key);
   };
  
 
@@ -225,6 +235,7 @@ export default class Rooms extends React.Component {
   };
 
   render() {
+    this.updateData()
     const { dataSource } = this.state;
     const components = {
       body: {
