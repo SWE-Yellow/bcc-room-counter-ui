@@ -185,29 +185,50 @@ export default class Presentations extends React.Component {
     };
   }
 
-
   isEditing = record => record.key === this.state.editingKey;
 
   cancel = () => {
     this.setState({ editingKey: '' });
   };
 
+  save(form, key) {
+    form.validateFields((error, row) => {
+      if (error) {
+        return;
+      }
+      const newData = [...this.state.data];
+      const index = newData.findIndex(item => key === item.key);
+      if (index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, {
+          ...item,
+          ...row,
+        });
+        this.setState({ data: newData, editingKey: '' });
+      } else {
+        newData.push(row);
+        this.setState({ data: newData, editingKey: '' });
+      }
+    });
+  }
 
   edit(key) {
     this.setState({ editingKey: key });
   }
 
+
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
-
+ 
 
   handleAdd = () => {
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
-      name: `Presentation ${count}`,
+      name: `Edward King ${count}`,
+      cap: 5,
     };
     this.setState({
       dataSource: [...dataSource, newData],
