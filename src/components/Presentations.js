@@ -185,6 +185,7 @@ export default class Presentations extends React.Component {
     };
   }
 
+
   isEditing = record => record.key === this.state.editingKey;
 
   cancel = () => {
@@ -212,23 +213,29 @@ export default class Presentations extends React.Component {
     });
   }
 
+
+  isEditing = record => record.key === this.state.editingKey;
+
+  cancel = () => {
+    this.setState({ editingKey: '' });
+  };
+
+
   edit(key) {
     this.setState({ editingKey: key });
   }
-
 
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
     this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
- 
+
 
   handleAdd = () => {
     const { count, dataSource } = this.state;
     const newData = {
       key: count,
-      name: `Edward King ${count}`,
-      cap: 5,
+      name: `Presentation ${count}`,
     };
     this.setState({
       dataSource: [...dataSource, newData],

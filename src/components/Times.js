@@ -112,6 +112,7 @@ export default class Times extends React.Component {
       {
         title: 'Delete',
         width: '10%',
+        title: 'Delete/Edit',
         dataIndex: 'operation',
         render: (text, record) =>
           this.state.dataSource.length >= 1 ? (
