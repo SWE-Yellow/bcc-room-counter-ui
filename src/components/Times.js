@@ -110,7 +110,8 @@ export default class Times extends React.Component {
         <TimePicker onChange={this.onChange} defaultValue={moment('00:00', format)} format={format} />
       },
       {
-        title: 'Delete/Edit',
+        title: 'Delete',
+        width: '10%',
         dataIndex: 'operation',
         render: (text, record) =>
           this.state.dataSource.length >= 1 ? (
@@ -121,6 +122,7 @@ export default class Times extends React.Component {
       },
       {
         title: 'Edit',
+        width: '10%',
         dataIndex: 'operation',
         render: (text, record) => {
           const { editingKey } = this.state;
@@ -257,14 +259,15 @@ export default class Times extends React.Component {
     });
     return (
       <div>
-        <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-          Add a row
+        <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, fontSize: 20, marginRight: "600px", marginLeft: "620px", marginTop: 16 }}>
+          Add Time
         </Button>
         <Table
           components={components}
           rowClassName={() => 'editable-row'}
           dataSource={dataSource}
           columns={columns}
+          style={{ marginRight: "100px", marginLeft: "100px" }}
         />
       </div>
     );

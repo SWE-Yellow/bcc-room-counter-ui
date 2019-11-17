@@ -96,16 +96,18 @@ export default class Rooms extends React.Component {
       {
         title: 'Room Name',
         dataIndex: 'name',
-        width: '30%',
+        width: '15%',
         editable: true,
       },
       {
         title: 'Room Capacity',
         dataIndex: 'cap',
+        width: '10%',
         editable: true
       },
       {
         title: 'Delete',
+        width: '10%',
         dataIndex: 'operation',
         render: (text, record) =>
           this.state.dataSource.length >= 1 ? (
@@ -117,6 +119,7 @@ export default class Rooms extends React.Component {
       {
         title: 'Edit',
         dataIndex: 'operation',
+        width: '10%',
         render: (text, record) => {
           const { editingKey } = this.state;
           const editable = this.isEditing(record);
@@ -250,10 +253,10 @@ export default class Rooms extends React.Component {
     });
     return (
       <div>
-        <Button onClick={this.handleAdd} type="primary" style={{ marginBottom: 16 }}>
-          Add Room
+        <Button className="addButton" onClick={this.handleAdd} type="primary" style={{ marginBottom: 16, fontSize: 20, marginRight: "600px", marginLeft: "620px", marginTop: 16 }}>
+          Add New Room
         </Button>
-        <Table
+        <Table className="rooms"
           components={components}
           rowClassName={() => 'editable-row'}
           bordered
@@ -262,6 +265,7 @@ export default class Rooms extends React.Component {
           pagination={{
             onChange: this.cancel,
           }}
+          style={{ marginRight: "250px", marginLeft: "250px" }}
         />
       </div>
     );
