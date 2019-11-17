@@ -1,6 +1,9 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Table, Input, Button, Popconfirm, Form, Select } from 'antd';
+import UIInterface from './bcc-room-counter/UIInterface.js'
+
+let UII = new UIInterface()
 
 const { Option } = Select;
 
@@ -109,7 +112,7 @@ export default class Presentations extends React.Component {
         dataIndex: 'room',
         render: () => 
         <Select name="room" placeholder="Select Room" style={{ width: 200 }} >
-          {rooms.map(room => (<Option key={room}>{room}</Option>))}
+          {UII.fetchRooms().get("roomName").map(room => (<Option key={room}>{room}</Option>))}
         </Select>
       },
       {
@@ -117,7 +120,7 @@ export default class Presentations extends React.Component {
         dataIndex: 'speaker',
         render: () => 
         <Select name="Speakers" placeholder="Select Speaker" style={{ width: 200 }} >
-          {speakers.map(speaker => (<Option key={speaker}>{speaker}</Option>))}
+          {UII.fetchSpeakers().get("firstName").map(name => (<Option key={name}>{name}</Option>))}
         </Select>
       },
       {
@@ -125,7 +128,7 @@ export default class Presentations extends React.Component {
         dataIndex: 'time',
         render: () => 
         <Select name="Timeslot" placeholder="Select Time" style={{ width: 200 }} >
-          {times.map(time => (<Option key={time}>{time}</Option>))}
+          {UII.fetchTimes().get("startTime").map(time => (<Option key={time}>{time}</Option>))}
         </Select>
       },
       {

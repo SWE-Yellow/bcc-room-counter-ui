@@ -7,6 +7,7 @@ import Rooms from './components/Rooms';
 import Speakers from './components/Speakers';
 import Times from './components/Times';
 import Presentations from './components/Presentations';
+import UIInterface from './components/bcc-room-counter/UIInterface.js'
 
 
 const initialState = {
@@ -24,21 +25,36 @@ const initialState = {
   ],
 }
 
+let UII = new UIInterface()
 /*
- * Firebase account and default login:
- * Email: bcc_counter@gmail.com
- *  Pass: team_yellow123
- */
+* Firebase account and default login:
+* Email: bcc_counter@gmail.com
+*  Pass: team_yellow123
+*/
 export default class App extends React.Component{
-
+  
   constructor(props) {
     super(props);
     this.state = initialState;
+    this.UII = UII;
 
     this.login = this.login.bind(this);
   }
 
   render () {
+
+    var times = UII.fetchTimes();
+    var i;
+    // console.log(times)
+    for(i = 0; i < times.length; i++){
+      console.log(times.get("firstName"))
+    }
+    // console.log(times)
+
+    // console.log(JSON.parse(this.UII.fetchRooms()))
+    // {
+    //   [UII.fetch()].map(room => (console.log(room)))
+    // }
     return(
       <Router>
         <Navbar />
