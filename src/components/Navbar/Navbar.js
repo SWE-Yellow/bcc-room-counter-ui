@@ -7,7 +7,7 @@ import './Navbar.css';
 const navbar = props => (
   <Navbar justify className="justify-content-center" bg="dark" variant="dark">
     <Nav className="mr-auto">
-      <Navbar.Brand> Boston Code Camp Counter</Navbar.Brand>
+      <Navbar.Brand> BCC</Navbar.Brand>
     </Nav>
     <Nav className="mr-auto" variant="pills" defaultActiveKey="/Rooms" activeKey={props.location.pathname}>
       <Nav.Item>
