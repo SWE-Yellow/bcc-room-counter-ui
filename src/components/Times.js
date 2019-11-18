@@ -3,11 +3,10 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import moment from 'moment'
 import { Table, Input, Button, Popconfirm, Form, TimePicker } from 'antd';
+import UIInterface from './bcc-room-counter/UIInterface.js';
 
+const UII = new UIInterface()
 const format = 'HH:mm';
-
-
-
 const EditableContext = React.createContext();
 
 const EditableRow = ({ form, index, ...props }) => (

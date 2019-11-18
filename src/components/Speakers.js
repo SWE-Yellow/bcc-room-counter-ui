@@ -1,9 +1,9 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import { Table, Input, InputNumber, Button, Popconfirm, Form } from 'antd';
+import UIInterface from './bcc-room-counter/UIInterface.js';
 
-
+const UII = new UIInterface()
 const EditableContext = React.createContext();
 
 const EditableRow = ({ form, index, ...props }) => (
@@ -149,20 +149,22 @@ export default class Rooms extends React.Component {
     ];
 
     this.state = {
-      dataSource: [
-        {
-          key: '0',
-          name: 'Anakin Skywalker',
-          email: 'vader@sith.net',
-        },
-        {
-          key: '1',
-          name: 'Tony Stark',
-          email: 'notironman@stark.com',
-        },
-      ],
-      count: 2,
+      dataSource: this.getSpeakers()
     };
+  }
+
+  getSpeakers() {
+    let speakerInfo = UII.fetchSpeakers();
+    let speakerData = []
+    for (let i = 0; i < speakerInfo.get("firstName").length; i++) {
+      speakerData.push(
+        {
+          key: i,
+          name: speakerInfo.get("firstName")[i], 
+          email: speakerInfo.get("email")[i],
+        })
+    }
+    return speakerData
   }
 
   isEditing = record => record.key === this.state.editingKey;
@@ -204,15 +206,15 @@ export default class Rooms extends React.Component {
  
 
   handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
-      email: 5,
+    const { dataSource } = this.state;
+    const newSpeaker = {
+      key: dataSource.length,
+      name: `Speaker ${dataSource.length + 1}`,
+      email: "speaker@speak.com",
     };
+
     this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
+      dataSource: [...dataSource, newSpeaker]
     });
   };
 

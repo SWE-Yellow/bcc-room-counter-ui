@@ -1,9 +1,9 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { Table, Input, InputNumber, Button, Popconfirm, Form } from 'antd';
+import { Table, Input, Button, Popconfirm, Form } from 'antd';
+import UIInterface from './bcc-room-counter/UIInterface.js'
 
-
+const UII = new UIInterface()
 const EditableContext = React.createContext();
 
 const EditableRow = ({ form, index, ...props }) => (
@@ -149,20 +149,22 @@ export default class Rooms extends React.Component {
     ];
 
     this.state = {
-      dataSource: [
-        {
-          key: '0',
-          name: 'Dobbs 310',
-          cap: '20',
-        },
-        {
-          key: '1',
-          name: 'Accelerate',
-          cap: '50',
-        },
-      ],
-      count: 2,
+      dataSource: this.getRooms()
     };
+  }
+
+  getRooms() {
+    let roomInfo = UII.fetchRooms();
+    let roomData = []
+    for (let i = 0; i < roomInfo.get("roomName").length; i++) {
+      roomData.push(
+        {
+          key: i,
+          name: roomInfo.get("roomName")[i], 
+          cap: roomInfo.get("roomCapacity")[i],
+        })
+    }
+    return roomData
   }
 
   isEditing = record => record.key === this.state.editingKey;
@@ -199,20 +201,20 @@ export default class Rooms extends React.Component {
 
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+    UII.deleteRoom(key)
+    this.setState({ dataSource: this.getRooms() });
   };
  
 
   handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
-      cap: 5,
+    const { dataSource } = this.state;
+    const newRoom = {
+      key: dataSource.length,
+      name: `Speaker ${dataSource.length + 1}`,
+      cap: 25,
     };
     this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
+      dataSource: [...dataSource, newRoom]
     });
   };
 
@@ -228,6 +230,12 @@ export default class Rooms extends React.Component {
   };
 
   render() {
+    let row = 0
+    const newData = [...this.state.dataSource];
+    const index = newData.findIndex(item => row.key === item.key);
+    console.log(newData)
+    console.log(index)
+
     const { dataSource } = this.state;
     const components = {
       body: {
