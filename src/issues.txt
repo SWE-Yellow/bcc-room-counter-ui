@@ -1,0 +1,10 @@
+Priorities:
+- Need to keep track of start time and end time 
+- Presentations: Need to keep track of all drop down menus
+
+Misc:
+- Capacity is not a string, shouldn't be
+- Log out: need to save state (currently, just takes you to page and doesn't save state)
+- ? do we want to do something special with save button
+- validate queries are returning correct results
+- Central UII object 

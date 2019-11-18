@@ -219,14 +219,16 @@ export default class Rooms extends React.Component {
   };
 
   handleSave = row => {
-    const newData = [...this.state.dataSource];
-    const index = newData.findIndex(item => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    this.setState({ dataSource: newData, editingKey: '' });
+    let index = row.key
+    if (row >= this.state.dataSource.length){
+      index = -1
+    }
+    console.log(row.cap)
+    UII.saveRoom(index, row.name, row.cap).then(result => {
+      console.log(result)
+    })
+
+    this.setState({ dataSource: this.getRooms(), editingKey: '' });
   };
 
   render() {
