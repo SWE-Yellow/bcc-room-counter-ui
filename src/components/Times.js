@@ -1,5 +1,4 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import moment from 'moment'
 import { Table, Input, Button, Popconfirm, Form, TimePicker } from 'antd';
@@ -153,20 +152,23 @@ export default class Times extends React.Component {
     ];
 
     this.state = {
-      dataSource: [
-        {
-          key: '0',
-          name: 'Dobbs 310',
-          cap: '20',
-        },
-        {
-          key: '1',
-          name: 'Accelerate',
-          cap: '50',
-        },
-      ],
-      count: 2,
+      dataSource: this.getTimes()
     };
+  }
+
+  getTimes() {
+    let timeData = []
+    UII.fetchTimes().then(result => {
+      for (let i = 0; i < result.get("startTime").length; i++) {
+        timeData.push(
+          {
+            key: i,
+            start: moment(result.get("startTime")[i], format), 
+            end: moment(result.get("endTime")[i], format),
+          })
+      }
+    })
+    return timeData
   }
 
   isEditing = record => record.key === this.state.editingKey;
@@ -206,21 +208,18 @@ export default class Times extends React.Component {
   };
 
   handleDelete = key => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+    UII.deleteTime(key)
+    this.setState({ dataSource: this.getTimes() });
   };
 
   handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
-      cap: 5,
+    const { dataSource } = this.state;
+    const newTime = {
+      key: dataSource.length,
+      start: moment('00:00', format),
+      end: moment('00:00', format),
     };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
+    this.setState({dataSource: [...dataSource, newTime]});
   };
 
   handleSave = row => {

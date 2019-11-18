@@ -154,19 +154,17 @@ export default class Rooms extends React.Component {
   }
 
   getRooms() {
-    let roomInfo = UII.fetchRooms().then(result => {
-      console.log(result)
-    })
-
     let roomData = []
-    // for (let i = 0; i < roomInfo.get("roomName").length; i++) {
-    //   roomData.push(
-    //     {
-    //       key: i,
-    //       name: roomInfo.get("roomName")[i], 
-    //       cap: roomInfo.get("roomCapacity")[i],
-    //     })
-    // }
+    UII.fetchRooms().then(result => {
+      for (let i = 0; i < result.get("roomName").length; i++) {
+        roomData.push(
+          {
+            key: i,
+            name: result.get("roomName")[i], 
+            cap: result.get("roomCapacity")[i],
+          })
+      }
+    })
     return roomData
   }
 
@@ -203,7 +201,6 @@ export default class Rooms extends React.Component {
 
 
   handleDelete = key => {
-    const dataSource = [...this.state.dataSource];
     UII.deleteRoom(key)
     this.setState({ dataSource: this.getRooms() });
   };
@@ -233,12 +230,6 @@ export default class Rooms extends React.Component {
   };
 
   render() {
-    let row = 0
-    const newData = [...this.state.dataSource];
-    const index = newData.findIndex(item => row.key === item.key);
-    // console.log(newData)
-    // console.log(index)
-
     const { dataSource } = this.state;
     const components = {
       body: {

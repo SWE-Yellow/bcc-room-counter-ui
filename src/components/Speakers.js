@@ -154,16 +154,17 @@ export default class Rooms extends React.Component {
   }
 
   getSpeakers() {
-    let speakerInfo = UII.fetchSpeakers();
     let speakerData = []
-    for (let i = 0; i < speakerInfo.get("firstName").length; i++) {
-      speakerData.push(
-        {
-          key: i,
-          name: speakerInfo.get("firstName")[i], 
-          email: speakerInfo.get("email")[i],
-        })
-    }
+    UII.fetchSpeakers().then(result => {
+      for (let i = 0; i < result.get("name").length; i++) {
+        speakerData.push(
+          {
+            key: i,
+            name: result.get("name")[i], 
+            email: result.get("email")[i],
+          })
+      }
+    })
     return speakerData
   }
 
@@ -201,7 +202,8 @@ export default class Rooms extends React.Component {
 
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+    UII.deleteSpeaker(key)
+    this.setState({ dataSource: this.getSpeakers() });
   };
  
 

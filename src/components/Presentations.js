@@ -107,7 +107,7 @@ export default class Presentations extends React.Component {
         dataIndex: 'room',
         render: () => 
         <Select name="room" placeholder="Select Room" style={{ width: 200 }} >
-          {UII.fetchRooms().get("roomName").map(room => (<Option key={room}>{room}</Option>))}
+          {this.getRooms().map(room => (<Option key={room}>{room}</Option>))}
         </Select>
       },
       {
@@ -115,7 +115,7 @@ export default class Presentations extends React.Component {
         dataIndex: 'speaker',
         render: () => 
         <Select name="Speakers" placeholder="Select Speaker" style={{ width: 200 }} >
-          {UII.fetchSpeakers().get("firstName").map(name => (<Option key={name}>{name}</Option>))}
+          {this.getSpeakers().map(name => (<Option key={name}>{name}</Option>))}
         </Select>
       },
       {
@@ -123,7 +123,7 @@ export default class Presentations extends React.Component {
         dataIndex: 'time',
         render: () => 
         <Select name="Timeslot" placeholder="Select Time" style={{ width: 200 }} >
-          {UII.fetchTimes().get("startTime").map(time => (<Option key={time}>{time}</Option>))}
+          {this.getTimes().map(time => (<Option key={time}>{time}</Option>))}
         </Select>
       },
       {
@@ -174,19 +174,38 @@ export default class Presentations extends React.Component {
   }
 
   getPresentations() {
-    let presentationInfo = UII.fetchPresentations();
+
     let presentationData = []
-    for (let i = 0; i < presentationInfo.get("topic").length; i++) {
-      presentationData.push(
-        {
-          key: i,
-          name: presentationInfo.get("topic")[i], 
-          room: presentationInfo.get("roomId")[i],
-          speaker: presentationInfo.get("speakersId")[i],
-          time: presentationInfo.get("timeId")[i]
-        })
-    }
+    UII.fetchPresentations().then(result => {
+      for (let i = 0; i < result.get("topic").length; i++) {
+        presentationData.push(
+          {
+            key: i,
+            room: result.get("roomId")[i],
+            speaker: result.get("speakersId")[i],
+            time: result.get("timeId")[i]
+          })
+      }
+    })
     return presentationData
+  }
+
+  getRooms() {
+    let roomData = []
+    UII.fetchRooms().then(result => { roomData = result.get("roomName") })
+    return roomData
+  }
+
+  getSpeakers() {
+    let speakerData = []
+    UII.fetchSpeakers().then(result => { speakerData = result.get("name") })
+    return speakerData
+  }
+
+  getTimes() {
+    let timeData = []
+    UII.fetchTimes().then(result => { timeData = result.get("combined") })
+    return timeData
   }
 
   isEditing = record => record.key === this.state.editingKey;
@@ -222,22 +241,21 @@ export default class Presentations extends React.Component {
 
 
   handleDelete = key => {
-    const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+    UII.deletePresentation(key)
+    this.setState({ dataSource: this.getPresentations() });
   };
  
 
   handleAdd = () => {
-    const { count, dataSource } = this.state;
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
-      cap: 5,
+    const { dataSource } = this.state;
+    const newPresentation = {
+      key: dataSource.length,
+      name: `Presentation ${dataSource.length + 1}`,
+      room: 'roomId',
+      speaker: 'SpeakerId',
+      time: 'timeId'
     };
-    this.setState({
-      dataSource: [...dataSource, newData],
-      count: count + 1,
-    });
+    this.setState({dataSource: [...dataSource, newPresentation]});
   };
 
   handleSave = row => {
