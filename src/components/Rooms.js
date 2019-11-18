@@ -210,7 +210,7 @@ export default class Rooms extends React.Component {
     const { dataSource } = this.state;
     const newRoom = {
       key: dataSource.length,
-      name: `Speaker ${dataSource.length + 1}`,
+      name: `Room ${dataSource.length + 1}`,
       cap: 25,
     };
     this.setState({
